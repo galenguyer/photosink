@@ -130,3 +130,5 @@ dmypy.json
 
 # Album folder
 albums/
+_site/
+.vscode/
