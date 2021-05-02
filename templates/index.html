@@ -3,6 +3,12 @@
 
 <head>
     <title>Photos!</title>
+    <style>
+        img {
+            max-height: 720px;
+            max-width: 720px;
+        }
+    </style>
 </head>
 
 <body>
@@ -13,7 +19,7 @@
         {% endfor %}
         <hr>
         {% for image in images %}
-            <p>{{ image }}</p>
+            <p><img src="./{{ image }}"></p>
         {% endfor %}
     </div>
 </body>
