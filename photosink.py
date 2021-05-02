@@ -18,8 +18,6 @@ j2env = Environment(
 def main() -> None:
     root_path = Path(ALBUM_PATH)
     traverse_dir(root_path)
-    shutil.copyfile("./templates/index.html", str(Path(OUTPUT_PATH, "index.html")))
-    print(j2env.get_template("index.html").render())
 
 def traverse_dir(path: Path) -> None:
     # Traverse child directories
@@ -39,8 +37,8 @@ def traverse_dir(path: Path) -> None:
         if re.search("\.jpe?g$", str(node.name), re.IGNORECASE):
             resize_image(node, Path(out_path))
             dir["images"].append(node.name)
-    with open(str(Path(out_path, "index.json")), "w") as fd:
-        fd.write(json.dumps(dir))
+    with open(str(Path(out_path, "index.html")), "w") as fd:
+        fd.write(j2env.get_template("index.html").render(albums=dir["albums"]))
 
 
 def resize_image(image: Path, out_path: Path) -> None:
