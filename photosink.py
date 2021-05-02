@@ -5,17 +5,21 @@ import pathlib
 import shutil
 from pathlib import Path
 
+from jinja2 import Environment, FileSystemLoader
 
 ROOT_PATH = Path().cwd().resolve()
 ALBUM_PATH = Path(ROOT_PATH, "albums")
 OUTPUT_PATH = Path("./_site").resolve()
 
+j2env = Environment(
+    loader=FileSystemLoader("./templates")
+)
 
 def main() -> None:
     root_path = Path(ALBUM_PATH)
     traverse_dir(root_path)
     shutil.copyfile("./templates/index.html", str(Path(OUTPUT_PATH, "index.html")))
-
+    print(j2env.get_template("index.html").render())
 
 def traverse_dir(path: Path) -> None:
     # Traverse child directories
