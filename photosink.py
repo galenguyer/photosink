@@ -17,12 +17,12 @@ j2env = Environment(
 
 def main() -> None:
     root_path = Path(ALBUM_PATH)
-    traverse_dir(root_path)
+    print(json.dumps(traverse_dir(root_path), indent=4))
 
-def traverse_dir(path: Path) -> None:
+def traverse_dir(path: Path):
     # Traverse child directories
     dir = {}
-    dir["name"] = path.name
+    dir["name"] = "Photos!" if (path == ALBUM_PATH) else path.name
     dir["albums"] = []
     dir["images"] = []
     out_path = str(path).replace(str(ALBUM_PATH), str(OUTPUT_PATH))
@@ -30,15 +30,15 @@ def traverse_dir(path: Path) -> None:
         print(f"Creating {out_path}")
         os.makedirs(out_path)
     for node in [node for node in path.iterdir() if node.is_dir()]:
-        dir["albums"].append(node.name)
-        traverse_dir(node)
+        dir["albums"].append(traverse_dir(node))
     # Handle images
     for node in [node for node in path.iterdir() if not node.is_dir()]:
         if re.search("\.jpe?g$", str(node.name), re.IGNORECASE):
             resize_image(node, Path(out_path))
             dir["images"].append(node.name)
     with open(str(Path(out_path, "index.html")), "w") as fd:
-        fd.write(j2env.get_template("index.html").render(albums=dir["albums"]))
+        fd.write(j2env.get_template("index.html").render(name = dir["name"], albums=dir["albums"], images=dir["images"]))
+    return dir
 
 
 def resize_image(image: Path, out_path: Path) -> None:

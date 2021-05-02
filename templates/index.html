@@ -7,8 +7,13 @@
 
 <body>
     <div id="root">
+        <h1 id="path">{{ name }}</h1>
         {% for album in albums %}
-            <p>{{ album }}</p>
+            <p>{{ album.name }}</p>
+        {% endfor %}
+        <hr>
+        {% for image in images %}
+            <p>{{ image }}</p>
         {% endfor %}
     </div>
 </body>
