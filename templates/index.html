@@ -7,9 +7,9 @@
 
 <body>
     <div id="root">
-        <h1 id="path">{{ name }}</h1>
+        <h1 id="path"><a href="..">{{ name }}</a></h1>
         {% for album in albums %}
-            <p>{{ album.name }}</p>
+            <p><a href="./{{ album.name }}">{{ album.name }}</a></p>
         {% endfor %}
         <hr>
         {% for image in images %}
