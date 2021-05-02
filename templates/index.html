@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Photos!</title>
+</head>
+
+<body>
+    <div id="root">
+        <noscript>
+            Please enable JavaScript for this gallery to function.
+        </noscript>
+    </div>
+    <script>
+        function getCurrentDirectory() {
+            let path = window.location.pathname;
+            return path.substring(0, path.lastIndexOf('/'));
+        }
+        document.getElementById("root").innerHTML = "";
+        fetch(`${getCurrentDirectory()}/index.json`)
+            .then(data => data.json())
+            .then(json => {
+                console.log(json);
+            })
+    </script>
+</body>
+
+</html>

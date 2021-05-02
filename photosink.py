@@ -14,6 +14,7 @@ OUTPUT_PATH = Path("./_site").resolve()
 def main() -> None:
     root_path = Path(ALBUM_PATH)
     traverse_dir(root_path)
+    shutil.copyfile("./templates/index.html", str(Path(OUTPUT_PATH, "index.html")))
 
 
 def traverse_dir(path: Path) -> None:
