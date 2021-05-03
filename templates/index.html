@@ -181,6 +181,13 @@
 </head>
 
 <body>
+    <h1><a href="..">{{ name }}</a></h1>
+    <div class="photoset square -portrait">
+        {% for album in albums %}
+        <a href="./{{ album.name }}" class="photo"
+            style="background-image:url('{{ album.name }}/{{ album.thumb }}')"></a>
+        {% endfor %}
+    </div>
     <div class="photoset square -portrait">
         {% for image in images %}
         <a href="#lightbox-{{ image }}" class="photo" style="background-image:url('{{ image }}')"></a>
@@ -188,7 +195,7 @@
         {% for image in images %}
         <div class="lightbox" id="lightbox-{{ image }}">
             <div class="content"><img src="{{ image }}" />
-                <div class="title">{{ image }}</div><a class="close" href="#gallery"></a>
+                <div class="title">{{ image }}</div><a class="close" href="#"></a>
             </div>
         </div>
         {% endfor %}

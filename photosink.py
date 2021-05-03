@@ -3,6 +3,7 @@ import os
 import json
 import pathlib
 import shutil
+import random
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -36,6 +37,7 @@ def traverse_dir(path: Path):
         if re.search("\.jpe?g$", str(node.name), re.IGNORECASE):
             resize_image(node, Path(out_path))
             dir["images"].append(node.name)
+    dir["thumb"] = dir["images"][0]
     with open(str(Path(out_path, "index.html")), "w") as fd:
         fd.write(j2env.get_template("index.html").render(name = dir["name"], albums=dir["albums"], images=dir["images"]))
     return dir
