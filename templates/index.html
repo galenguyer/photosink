@@ -16,12 +16,19 @@
         div.photoset {
             padding: 2px;
             background-color: #ffffff;
-            max-width: 95vw;
+            max-width: 80vw;
             width: 100%;
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
         }
+
+        @media screen and (max-width: 1000px) {
+            div.photoset {
+                max-width: 95vw;
+            }
+        }
+
 
         div.photoset .photo {
             position: relative;
