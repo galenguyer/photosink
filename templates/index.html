@@ -205,7 +205,7 @@
         {% endfor %}
         {% for image in images %}
         <div class="lightbox" id="lightbox-{{ image.path }}">
-            <div class="content"><img src="{{ image.path }}" />
+            <div class="content"><img src="{{ image.path }}" loading="lazy" />
                 <div class="title">{{ image.path }}</div><a class="close" href="#"></a>
             </div>
         </div>
