@@ -4,95 +4,74 @@
 <head>
     <title>Photos!</title>
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            margin: 5px;
-            position: relative;
-        }
-
-        #gallery {
-            display: grid;
-            grid-template: repeat(6, 1fr)/repeat(6, 1fr);
-            grid-gap: 0.5em;
-        }
-
-        @media (max-width: 800px) {
-            #gallery {
-                display: flex;
-                align-items: flex-start;
-                flex-wrap: wrap;
-            }
-
-            #gallery>div {
-                width: 48%;
-                margin: 1%;
-            }
-        }
-
-        @media (max-width: 800px) and (max-width: 350px) {
-            #gallery>div {
-                width: 98%;
-            }
-        }
-
-        #gallery>div:nth-child(6n+1) {
-            grid-column: span 2;
-            grid-row: span 2;
-        }
-
-        #gallery>div:nth-child(2) {
-            grid-column: span 3;
-            grid-row: span 3;
-        }
-
-        #gallery>div:nth-child(4) {
-            grid-column: span 1;
-            grid-row: span 2;
-        }
-
-        #gallery>div>a {
-            opacity: 0;
-            position: absolute;
-            color: #000;
-            background-color: #000;
-            font: bold 4em "Helvetica";
-            text-shadow: 0 -1px 5px #fff, -1px 0px 5px #fff, 0 1px 5px #fff, 1px 0px 5px #fff;
-            padding: 2rem;
-            mix-blend-mode: difference;
-            width: 100%;
-            height: 100%;
-            transition: all ease 1s;
-        }
-
-        #gallery>div>img {
-            width: 100%;
-            height: auto;
-            transition: all ease 1s;
-        }
-
-        #gallery>div:hover img {
-            filter: blur(4px);
-        }
-
-        #gallery>div:hover a {
-            opacity: 1;
-        }
-
-        #gallery>div {
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 20px 0 rgba(0, 0, 0, 0.19);
-        }
-
-        #gallery div,
-        #gallery a {
+            font-family: sans-serif;
+            overflow-y: scroll;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            text-decoration: none;
+            margin: 10px;
+        }
+
+        div.photoset {
+            padding: 2px;
+            background-color: #ffffff;
+            max-width: 95vw;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        div.photoset .photo {
+            position: relative;
+            flex-grow: 1;
+            min-width: calc(100% / 4);
+            background-size: cover;
+            background-position: center;
+        }
+
+        @media screen and (max-width: 1000px) {
+            div.photoset .photo {
+                min-width: calc(100% / 3);
+            }
+        }
+
+        @media screen and (max-width: 700px) {
+            div.photoset .photo {
+                min-width: calc(100% / 2);
+            }
+        }
+
+        @media screen and (max-width: 460px) {
+            div.photoset .photo {
+                min-width: 100%;
+            }
+        }
+
+        div.photoset .photo:after {
+            padding-top: 83.33333%;
+            display: block;
+            content: "";
+        }
+
+        div.photoset .photo:before {
+            z-index: 1;
+            position: absolute;
+            content: "";
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            box-shadow: inset 0 0 0 2px #ffffff;
+        }
+
+        div.photoset.square .photo:after {
+            padding-top: 100%;
+        }
+
+        div.photoset.portrait .photo:after {
+            padding-top: 120%;
         }
 
         [id^=lightbox-] {
@@ -105,6 +84,7 @@
             display: flex;
             opacity: 0;
             transition: opacity 450ms ease-in-out;
+            z-index: 3;
             align-items: center;
             justify-content: center;
             pointer-events: none;
@@ -201,18 +181,18 @@
 </head>
 
 <body>
-    <div id="gallery">
-    {% for image in images %}
-        <div><img src="./{{ image }}" /><a href="#lightbox-{{ image }}">512</a></div>
-    {% endfor %}
-    </div>
-    {% for image in images %} 
-    <div class="lightbox" id="lightbox-{{ image }}">
-        <div class="content"><img src="{{ image }}" />
-            <div class="title">{{ image }}</div><a class="close" href="#gallery"></a>
+    <div class="photoset square -portrait">
+        {% for image in images %}
+        <a href="#lightbox-{{ image }}" class="photo" style="background-image:url('{{ image }}')"></a>
+        {% endfor %}
+        {% for image in images %}
+        <div class="lightbox" id="lightbox-{{ image }}">
+            <div class="content"><img src="{{ image }}" />
+                <div class="title">{{ image }}</div><a class="close" href="#gallery"></a>
+            </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
 </body>
 
 </html>
