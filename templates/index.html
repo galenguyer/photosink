@@ -29,6 +29,9 @@
             }
         }
 
+        hr {
+            width: 80vw;
+        }
 
         div.photoset .photo {
             position: relative;
@@ -190,22 +193,24 @@
 <body>
     <h1><a href="..">{{ name }}</a></h1>
     <div class="photoset square -portrait">
+        {% if albums %}
         {% for album in albums %}
         <a href="./{{ album.name }}" class="photo"
-            style="background-image:url('{{ album.name }}/{{ album.thumb }}')"></a>
+            style="background-image:url('{{ album.name }}/{{ album.thumb.thumb }}')"></a>
         {% endfor %}
-    </div>
-    <div class="photoset square -portrait">
+        {% endif %}
+        {% if images %}
         {% for image in images %}
-        <a href="#lightbox-{{ image }}" class="photo" style="background-image:url('{{ image }}')"></a>
+        <a href="#lightbox-{{ image.path }}" class="photo" style="background-image:url('{{ image.thumb }}')"></a>
         {% endfor %}
         {% for image in images %}
-        <div class="lightbox" id="lightbox-{{ image }}">
-            <div class="content"><img src="{{ image }}" />
-                <div class="title">{{ image }}</div><a class="close" href="#"></a>
+        <div class="lightbox" id="lightbox-{{ image.path }}">
+            <div class="content"><img src="{{ image.path }}" />
+                <div class="title">{{ image.path }}</div><a class="close" href="#"></a>
             </div>
         </div>
         {% endfor %}
+        {% endif %}
     </div>
 </body>
 
